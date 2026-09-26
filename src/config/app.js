@@ -1,6 +1,7 @@
 export const school = {
   name: "الثانوية الخامسة مسارات للبنات بعفيف",
   authority: "الادارة العامة للتعليم بمنطقة الرياض",
+  principal: "أ.سينا عاصي الغنامي",
   logoSrc: "/logo.svg",
 };
 

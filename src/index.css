@@ -179,6 +179,16 @@ a {
   color: var(--bio-deep);
 }
 
+.principal-name {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  margin: 2px 16px 0;
+  font-weight: 800;
+  font-size: clamp(0.78rem, 2vw, 0.9rem);
+  color: var(--navy);
+}
+
 .hero {
   width: min(1120px, calc(100% - 32px));
   margin: 12px auto 0;

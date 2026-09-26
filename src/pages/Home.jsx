@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
 import Character from "../components/Character";
-import { companion } from "../config/app";
+import { companion, school } from "../config/app";
 
 export default function Home() {
   return (
     <div className="page theme-home">
       <div className="home-glow" aria-hidden="true" />
       <SchoolHeader />
+      <p className="principal-name">مديرة المدرسة: {school.principal}</p>
 
       <main className="hero">
         <div className="hero-copy fade-up">
