@@ -9,8 +9,8 @@ export default function SchoolHeader({ compact = false }) {
           <img src={school.logoSrc} alt="" />
         </span>
         <span className="school-text">
-          <span className="school-name">{school.name}</span>
           <span className="school-authority">{school.authority}</span>
+          <span className="school-name">{school.name}</span>
         </span>
       </Link>
     </header>
