@@ -1,24 +1,13 @@
 import { useState } from "react";
 
 export default function ExplanationFlip({ explanation }) {
-  const [stage, setStage] = useState("button");
+  const [open, setOpen] = useState(false);
 
-  if (stage === "button") {
+  if (!open) {
     return (
       <div className="why-wrap">
-        <button type="button" className="why-btn" onClick={() => setStage("front")}>
+        <button type="button" className="why-btn" onClick={() => setOpen(true)}>
           لماذا؟ 💡
-        </button>
-      </div>
-    );
-  }
-
-  if (stage === "front") {
-    return (
-      <div className="why-wrap">
-        <button type="button" className="explain-card explain-front" onClick={() => setStage("back")}>
-          <strong>💡 لماذا هذه هي الإجابة الصحيحة؟</strong>
-          <small>اضغطي لفتح الشرح</small>
         </button>
       </div>
     );

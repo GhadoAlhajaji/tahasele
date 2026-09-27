@@ -396,15 +396,21 @@ a {
   filter: grayscale(0.15);
 }
 
-.subject-teacher {
-  margin: 2px 0 0;
+.subject-teachers {
+  margin: 6px 0 4px;
+  line-height: 1.55;
+}
+
+.subject-teacher-label,
+.subject-teachers p {
+  margin: 0;
   font-weight: 800;
   color: var(--bio-teal);
   font-size: 0.95rem;
 }
 
-.bio-hero-panel .subject-teacher {
-  margin: 4px 0 10px;
+.bio-hero-panel .subject-teachers {
+  margin: 6px 0 12px;
 }
 
 .subject-cta,
@@ -788,6 +794,12 @@ a {
 .explain-front small {
   color: var(--muted);
   font-weight: 700;
+}
+
+.explain-front-hint {
+  font-weight: 800;
+  color: var(--bio-deep);
+  margin-bottom: 8px;
 }
 
 .explain-card p {

@@ -8,7 +8,7 @@ export const subjects = [
     enabled: true,
     path: "/biology",
     blurb: "ادخلي عالم الخلية والوراثة والحياة، وتقدّمي مع نورة نحو التخرج.",
-    teacher: "سمر الهذلي",
+    teachers: ["سمر الهذلي", "مها العتيبي"],
   },
 ];
 

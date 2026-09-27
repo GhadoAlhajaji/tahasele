@@ -18,8 +18,13 @@ export default function Subjects() {
             <Link key={subject.id} to={subject.path} className="subject-card is-live">
               <span className="subject-emoji">{subject.emoji}</span>
               <h2>{subject.name}</h2>
-              {subject.teacher ? (
-                <p className="subject-teacher">معلمة المادة: {subject.teacher}</p>
+              {subject.teachers?.length ? (
+                <div className="subject-teachers">
+                  <p className="subject-teacher-label">معلمات المادة</p>
+                  {subject.teachers.map((name) => (
+                    <p key={name}>{name}</p>
+                  ))}
+                </div>
               ) : null}
               <p>{subject.blurb}</p>
               <span className="subject-cta">ادخلي المادة</span>

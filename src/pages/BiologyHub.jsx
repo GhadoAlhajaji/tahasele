@@ -67,7 +67,12 @@ export default function BiologyHub() {
           <div>
             <p className="eyebrow">🧬 عالم الأحياء</p>
             <h1>رحلتي في الأحياء</h1>
-            <p className="subject-teacher">معلمة المادة: {subjects.find((item) => item.id === SUBJECT_IDS.biology)?.teacher}</p>
+            <div className="subject-teachers">
+              <p className="subject-teacher-label">معلمات المادة</p>
+              {(subjects.find((item) => item.id === SUBJECT_IDS.biology)?.teachers ?? []).map((name) => (
+                <p key={name}>{name}</p>
+              ))}
+            </div>
             <p>
               {companion.name} تسير معك من البداية حتى التخرج. كل فصل عشر أسئلة متنوعة،
               وكل إجابة صحيحة تمنحك 10 نقاط.
