@@ -4,25 +4,25 @@
   --navy-soft: #234866;
   --gold: #c4a35a;
   --gold-soft: #ead7a5;
-  --cream: #f6f0e6;
-  --cream-2: #fffaf2;
-  --ink: #1e2a32;
-  --muted: #5b6b75;
-  --bio-deep: #0b3d38;
-  --bio-teal: #0f766e;
-  --bio-green: #2f9e78;
-  --bio-mint: #e8f7f2;
-  --bio-mint-2: #f3fbf8;
-  --bio-aqua: #14b8a6;
-  --bio-sky: #3e9bb8;
-  --bio-leaf: #67c39a;
-  --chem-deep: #3f2710;
-  --chem-amber: #c2410c;
-  --chem-lab: #0369a1;
-  --chem-gold: #d97706;
-  --phys-deep: #14213d;
-  --phys-blue: #1d4ed8;
-  --phys-sky: #0ea5e9;
+  --cream: #f7f4ef;
+  --cream-2: #fffcf8;
+  --ink: #243044;
+  --muted: #667085;
+  --bio-deep: #245744;
+  --bio-teal: #3d9b72;
+  --bio-green: #4caf7d;
+  --bio-mint: #e8f7ee;
+  --bio-mint-2: #f4fbf7;
+  --bio-aqua: #7dceaa;
+  --bio-sky: #a7e3ca;
+  --bio-leaf: #6fbf96;
+  --chem-deep: #43356d;
+  --chem-amber: #8b74e8;
+  --chem-lab: #c9b6ff;
+  --chem-gold: #a78bfa;
+  --phys-deep: #23406b;
+  --phys-blue: #4f8df7;
+  --phys-sky: #93c5fd;
   --success: #137a5a;
   --success-bg: #e7f8ef;
   --warn: #b45309;
@@ -96,33 +96,46 @@ a {
 
 .theme-home {
   background:
-    radial-gradient(circle at 80% 10%, rgba(196, 163, 90, 0.22), transparent 28%),
-    radial-gradient(circle at 10% 80%, rgba(62, 155, 184, 0.16), transparent 30%),
-    linear-gradient(180deg, #f8f3ea 0%, #efe6d6 100%);
+    radial-gradient(circle at 8% 18%, rgba(167, 227, 202, 0.55), transparent 26%),
+    radial-gradient(circle at 92% 12%, rgba(201, 182, 255, 0.45), transparent 24%),
+    radial-gradient(circle at 78% 88%, rgba(147, 197, 253, 0.4), transparent 28%),
+    linear-gradient(180deg, #fbf8f4 0%, #f4f7f2 100%);
 }
 
 .theme-biology {
+  --accent: #4caf7d;
+  --accent-deep: #245744;
+  --accent-soft: #e8f7ee;
+  --accent-mid: #a7e3ca;
   background:
-    radial-gradient(circle at 12% 12%, rgba(103, 195, 154, 0.28), transparent 24%),
-    radial-gradient(circle at 90% 8%, rgba(20, 184, 166, 0.18), transparent 26%),
-    linear-gradient(180deg, #f3fbf8 0%, #e4f4ee 48%, #dceff3 100%);
-  color: #13322f;
+    radial-gradient(circle at 6% 16%, rgba(167, 227, 202, 0.7), transparent 28%),
+    radial-gradient(circle at 94% 8%, rgba(232, 247, 238, 0.9), transparent 24%),
+    linear-gradient(180deg, #f7fbf8 0%, #eef8f2 100%);
+  color: #245744;
 }
 
 .theme-chemistry {
+  --accent: #8b74e8;
+  --accent-deep: #43356d;
+  --accent-soft: #f3eeff;
+  --accent-mid: #c9b6ff;
   background:
-    radial-gradient(circle at 12% 12%, rgba(217, 119, 6, 0.2), transparent 24%),
-    radial-gradient(circle at 90% 8%, rgba(3, 105, 161, 0.16), transparent 26%),
-    linear-gradient(180deg, #fff8f1 0%, #f7efe4 48%, #e8f1f6 100%);
-  color: #3f2710;
+    radial-gradient(circle at 6% 16%, rgba(201, 182, 255, 0.62), transparent 28%),
+    radial-gradient(circle at 94% 10%, rgba(243, 238, 255, 0.95), transparent 24%),
+    linear-gradient(180deg, #fbf9ff 0%, #f6f3ff 100%);
+  color: #43356d;
 }
 
 .theme-physics {
+  --accent: #4f8df7;
+  --accent-deep: #23406b;
+  --accent-soft: #e4f2ff;
+  --accent-mid: #93c5fd;
   background:
-    radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.2), transparent 24%),
-    radial-gradient(circle at 90% 8%, rgba(14, 165, 233, 0.16), transparent 26%),
-    linear-gradient(180deg, #f4f7ff 0%, #e8eefc 48%, #e7f3fb 100%);
-  color: #14213d;
+    radial-gradient(circle at 6% 16%, rgba(147, 197, 253, 0.62), transparent 28%),
+    radial-gradient(circle at 94% 8%, rgba(228, 242, 255, 0.95), transparent 24%),
+    linear-gradient(180deg, #f7fbff 0%, #eef5ff 100%);
+  color: #23406b;
 }
 
 .home-glow,
@@ -146,7 +159,14 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px 20px 8px;
+  width: min(1100px, calc(100% - 28px));
+  margin: 16px auto 0;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(36, 48, 68, 0.06);
+  backdrop-filter: blur(12px);
 }
 
 .school-brand {
@@ -1166,4 +1186,329 @@ a {
     width: 320px;
     height: 420px;
   }
+}
+
+.page-blobs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-blobs span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+.page-blobs span:nth-child(1) {
+  width: 220px;
+  height: 160px;
+  background: rgba(167, 227, 202, 0.45);
+  top: 120px;
+  left: -40px;
+  border-radius: 60% 40% 70% 30%;
+}
+
+.page-blobs span:nth-child(2) {
+  width: 180px;
+  height: 180px;
+  background: rgba(201, 182, 255, 0.35);
+  top: 40px;
+  right: -30px;
+}
+
+.page-blobs span:nth-child(3) {
+  width: 140px;
+  height: 90px;
+  background: rgba(147, 197, 253, 0.4);
+  bottom: 40px;
+  right: 12%;
+  border-radius: 40% 60% 50% 50%;
+}
+
+.page-intro {
+  text-align: center;
+}
+
+.page-intro h1 {
+  color: #2c3a4e;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+}
+
+.subjects-grid {
+  align-items: stretch;
+}
+
+.subject-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+  padding: 28px 22px 22px;
+  border-radius: 32px;
+  background: white;
+  text-align: center;
+  align-items: center;
+}
+
+.subject-card::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  right: -30px;
+  bottom: -36px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.subject-card.is-biology {
+  background: linear-gradient(180deg, #f4fbf7 0%, #e7f6ee 100%);
+  color: #245744;
+}
+
+.subject-card.is-chemistry {
+  background: linear-gradient(180deg, #f8f5ff 0%, #efe8ff 100%);
+  color: #43356d;
+}
+
+.subject-card.is-physics {
+  background: linear-gradient(180deg, #f5f9ff 0%, #e7f1ff 100%);
+  color: #23406b;
+}
+
+.subject-card.is-live:hover {
+  transform: translateY(-8px) scale(1.015);
+}
+
+.subject-icon {
+  width: 92px;
+  height: 92px;
+  margin: 8px auto 6px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 10px 24px rgba(36, 48, 68, 0.08);
+}
+
+.subject-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.subject-card.is-biology .subject-icon { color: #3d9b72; }
+.subject-card.is-chemistry .subject-icon { color: #8b74e8; }
+.subject-card.is-physics .subject-icon { color: #4f8df7; }
+
+.subject-card h2 {
+  font-size: 1.55rem;
+}
+
+.subject-card .subject-teachers,
+.subject-card .subject-teacher-label,
+.subject-card .subject-teachers p {
+  color: inherit;
+  font-size: 0.92rem;
+}
+
+.subject-card > p {
+  color: #5d6b7a;
+  font-size: 0.95rem;
+}
+
+.subject-cta {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 132px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: white;
+  background: var(--accent, #4caf7d);
+  box-shadow: 0 8px 18px rgba(36, 48, 68, 0.12);
+}
+
+.subject-card.is-biology .subject-cta { background: #4caf7d; }
+.subject-card.is-chemistry .subject-cta { background: #8b74e8; }
+.subject-card.is-physics .subject-cta { background: #4f8df7; }
+
+.chapter-card {
+  align-items: center;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chapter-card:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(36, 48, 68, 0.08);
+}
+
+.chapter-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.chapter-glyph {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft, #e8f7ee);
+  flex: none;
+  font-size: 1.15rem;
+}
+
+.chapter-num,
+.theme-biology .chapter-num {
+  background: var(--accent-soft, #e8f7ee);
+  color: var(--accent-deep, #245744);
+  border-radius: 50%;
+}
+
+.chapter-card.is-complete {
+  background: linear-gradient(180deg, var(--accent-soft, #f3fff8), #ffffff);
+}
+
+.chapter-card.is-complete .chapter-num {
+  background: var(--accent, #4caf7d);
+  color: white;
+}
+
+.theme-biology .progress-track,
+.theme-chemistry .progress-track,
+.theme-physics .progress-track {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(36, 48, 68, 0.05);
+}
+
+.theme-biology .progress-fill,
+.theme-chemistry .progress-fill,
+.theme-physics .progress-fill {
+  background: linear-gradient(90deg, var(--accent-mid), var(--accent));
+}
+
+.theme-biology .btn-primary,
+.theme-chemistry .btn-primary,
+.theme-physics .btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-mid));
+  box-shadow: 0 12px 24px rgba(36, 48, 68, 0.12);
+}
+
+.theme-biology .option-btn,
+.theme-chemistry .option-btn,
+.theme-physics .option-btn {
+  border-color: var(--accent-mid);
+  border-radius: 20px;
+}
+
+.theme-biology .option-letter,
+.theme-chemistry .option-letter,
+.theme-physics .option-letter {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.theme-biology .step-dot,
+.theme-chemistry .step-dot,
+.theme-physics .step-dot {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.theme-biology .step-dot.is-done,
+.theme-chemistry .step-dot.is-done,
+.theme-physics .step-dot.is-done {
+  background: var(--accent);
+}
+
+.theme-biology .step-dot.is-current,
+.theme-chemistry .step-dot.is-current,
+.theme-physics .step-dot.is-current {
+  background: var(--accent-mid);
+}
+
+.theme-biology .journey-track::before {
+  background: linear-gradient(90deg, #d7f3e6, #4caf7d);
+}
+
+.theme-chemistry .journey-track::before {
+  background: linear-gradient(90deg, #efe8ff, #8b74e8);
+}
+
+.theme-physics .journey-track::before {
+  background: linear-gradient(90deg, #e4f2ff, #4f8df7);
+}
+
+.theme-biology .journey-node.is-done .journey-emoji,
+.theme-chemistry .journey-node.is-done .journey-emoji,
+.theme-physics .journey-node.is-done .journey-emoji {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.theme-biology .back-link,
+.theme-biology .chapter-cta,
+.theme-biology .question-kicker,
+.theme-chemistry .back-link,
+.theme-chemistry .chapter-cta,
+.theme-chemistry .question-kicker,
+.theme-physics .back-link,
+.theme-physics .chapter-cta,
+.theme-physics .question-kicker {
+  color: var(--accent-deep);
+}
+
+.theme-chemistry .bio-decor .decor-cell,
+.theme-chemistry .chem-decor .decor-cell,
+.theme-chemistry .decor-cell {
+  border-color: rgba(139, 116, 232, 0.2);
+  background: rgba(201, 182, 255, 0.2);
+}
+
+.theme-physics .decor-cell {
+  border-color: rgba(79, 141, 247, 0.2);
+  background: rgba(147, 197, 253, 0.22);
+}
+
+.bio-hero-panel,
+.hub-progress-card,
+.question-card,
+.results-hero {
+  border-radius: 28px;
+}
+
+.score-badge {
+  background: white;
+  color: var(--accent-deep, #245744);
+}
+
+.theme-home .btn-primary {
+  background: linear-gradient(135deg, #4caf7d, #7dceaa);
+  box-shadow: 0 12px 24px rgba(76, 175, 125, 0.22);
+}
+
+.theme-home .hero-copy h1,
+.theme-home .hero-copy h1 span {
+  background: none;
+  color: #2c3a4e;
+  -webkit-text-fill-color: #2c3a4e;
+}
+
+.theme-home .hero-copy h1 span {
+  color: #3d9b72;
+  -webkit-text-fill-color: #3d9b72;
+}
+
+.theme-biology .character-frame { background: #e8f7ee; }
+.theme-chemistry .character-frame { background: #f3eeff; }
+.theme-physics .character-frame { background: #e7f2ff; }
+
+.theme-biology .journey-node.is-current .journey-emoji,
+.theme-chemistry .journey-node.is-current .journey-emoji,
+.theme-physics .journey-node.is-current .journey-emoji {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 22%, transparent);
 }

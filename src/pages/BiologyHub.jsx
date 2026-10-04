@@ -22,6 +22,11 @@ export default function SubjectHub() {
   const planned = subject?.plannedChapters ?? 1;
   const stage = getJourneyStageIndex(completed, planned);
   const pose = stage >= 5 ? "graduate" : "idle";
+  const chapterIcons = {
+    biology: ["🍃", "🧬", "🔬", "🌱"],
+    chemistry: ["⚗️", "🧪", "🫧", "🔬"],
+    physics: ["⚛️", "⚡", "🌊", "🔭"],
+  };
 
   if (!subject) {
     return <Navigate to="/subjects" replace />;
@@ -76,7 +81,9 @@ export default function SubjectHub() {
             <h1>{subject.hubTitle}</h1>
             {subject.teachers?.length ? (
               <div className="subject-teachers">
-                <p className="subject-teacher-label">معلمات المادة</p>
+                <p className="subject-teacher-label">
+                  {subject.teachers.length > 1 ? "معلمات المادة" : "معلمة المادة"}
+                </p>
                 {subject.teachers.map((name) => (
                   <p key={name}>{name}</p>
                 ))}
@@ -129,11 +136,14 @@ export default function SubjectHub() {
                   disabled={state === "locked" || state === "soon"}
                 >
                   <span className="chapter-num">{card.chapter}</span>
-                  <div>
+                  <div className="chapter-copy">
                     <h3>الفصل {card.ordinal}</h3>
                     <p>{card.intro}</p>
                     <span className="chapter-cta">{labels[state]}</span>
                   </div>
+                  <span className="chapter-glyph" aria-hidden="true">
+                    {(chapterIcons[subject.id] ?? chapterIcons.biology)[(card.chapter - 1) % 4]}
+                  </span>
                 </button>
               );
             })}

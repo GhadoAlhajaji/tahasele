@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
+import SubjectMark from "../components/SubjectMark";
 import { subjects, upcomingSubjectSlots } from "../config/subjects";
 
 export default function Subjects() {
   return (
     <div className="page theme-home">
+      <div className="page-blobs" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       <SchoolHeader compact />
       <main className="subjects-page">
         <div className="page-intro fade-up">
@@ -15,12 +21,16 @@ export default function Subjects() {
 
         <div className="subjects-grid fade-up delay-1">
           {subjects.map((subject) => (
-            <Link key={subject.id} to={subject.path} className="subject-card is-live">
-              <span className="subject-emoji">{subject.emoji}</span>
+            <Link key={subject.id} to={subject.path} className={`subject-card is-live is-${subject.id}`}>
+              <span className="subject-icon">
+                <SubjectMark subjectId={subject.id} />
+              </span>
               <h2>{subject.name}</h2>
               {subject.teachers?.length ? (
                 <div className="subject-teachers">
-                  <p className="subject-teacher-label">معلمات المادة</p>
+                  <p className="subject-teacher-label">
+                    {subject.teachers.length > 1 ? "معلمات المادة" : "معلمة المادة"}
+                  </p>
                   {subject.teachers.map((name) => (
                     <p key={name}>{name}</p>
                   ))}
