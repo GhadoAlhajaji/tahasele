@@ -21,6 +21,8 @@ function emptyState() {
   return {
     subjects: {
       [SUBJECT_IDS.biology]: emptySubject(),
+      [SUBJECT_IDS.chemistry]: emptySubject(),
+      [SUBJECT_IDS.physics]: emptySubject(),
     },
   };
 }
@@ -159,8 +161,8 @@ export function resetSubjectProgress(subjectId) {
   persist();
 }
 
-export function getJourneyStageIndex(completedChapters) {
+export function getJourneyStageIndex(completedChapters, plannedChapters = PLANNED_CHAPTERS) {
   if (completedChapters <= 0) return 0;
-  if (completedChapters >= PLANNED_CHAPTERS) return 5;
-  return Math.min(4, Math.max(1, Math.ceil((completedChapters / PLANNED_CHAPTERS) * 4)));
+  if (completedChapters >= plannedChapters) return 5;
+  return Math.min(4, Math.max(1, Math.ceil((completedChapters / plannedChapters) * 4)));
 }

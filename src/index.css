@@ -16,6 +16,13 @@
   --bio-aqua: #14b8a6;
   --bio-sky: #3e9bb8;
   --bio-leaf: #67c39a;
+  --chem-deep: #3f2710;
+  --chem-amber: #c2410c;
+  --chem-lab: #0369a1;
+  --chem-gold: #d97706;
+  --phys-deep: #14213d;
+  --phys-blue: #1d4ed8;
+  --phys-sky: #0ea5e9;
   --success: #137a5a;
   --success-bg: #e7f8ef;
   --warn: #b45309;
@@ -102,8 +109,26 @@ a {
   color: #13322f;
 }
 
+.theme-chemistry {
+  background:
+    radial-gradient(circle at 12% 12%, rgba(217, 119, 6, 0.2), transparent 24%),
+    radial-gradient(circle at 90% 8%, rgba(3, 105, 161, 0.16), transparent 26%),
+    linear-gradient(180deg, #fff8f1 0%, #f7efe4 48%, #e8f1f6 100%);
+  color: #3f2710;
+}
+
+.theme-physics {
+  background:
+    radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.2), transparent 24%),
+    radial-gradient(circle at 90% 8%, rgba(14, 165, 233, 0.16), transparent 26%),
+    linear-gradient(180deg, #f4f7ff 0%, #e8eefc 48%, #e7f3fb 100%);
+  color: #14213d;
+}
+
 .home-glow,
-.bio-decor {
+.bio-decor,
+.chem-decor,
+.phys-decor {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -177,6 +202,22 @@ a {
 
 .theme-biology .school-name {
   color: var(--bio-deep);
+}
+
+.theme-chemistry .school-authority {
+  color: #7a5a3a;
+}
+
+.theme-chemistry .school-name {
+  color: var(--chem-deep);
+}
+
+.theme-physics .school-authority {
+  color: #4a5d86;
+}
+
+.theme-physics .school-name {
+  color: var(--phys-deep);
 }
 
 .principal-name {
@@ -281,6 +322,16 @@ a {
 .theme-biology .btn-primary {
   background: linear-gradient(135deg, var(--bio-teal), var(--bio-sky));
   box-shadow: 0 12px 24px rgba(15, 118, 110, 0.22);
+}
+
+.theme-chemistry .btn-primary {
+  background: linear-gradient(135deg, var(--chem-amber), var(--chem-lab));
+  box-shadow: 0 12px 24px rgba(194, 65, 12, 0.22);
+}
+
+.theme-physics .btn-primary {
+  background: linear-gradient(135deg, var(--phys-blue), var(--phys-sky));
+  box-shadow: 0 12px 24px rgba(29, 78, 216, 0.22);
 }
 
 .btn-ghost {
@@ -662,6 +713,7 @@ a {
 .question-text,
 .option-text {
   overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 
 .question-text {
@@ -944,7 +996,11 @@ a {
 .sparkle-burst span:nth-child(5) { top: 14%; right: 46%; animation-delay: 0.08s; }
 
 .bio-decor .decor-cell,
-.bio-decor .decor-mol {
+.bio-decor .decor-mol,
+.chem-decor .decor-cell,
+.chem-decor .decor-mol,
+.phys-decor .decor-cell,
+.phys-decor .decor-mol {
   position: absolute;
   border-radius: 50%;
   border: 2px solid rgba(47, 158, 120, 0.18);

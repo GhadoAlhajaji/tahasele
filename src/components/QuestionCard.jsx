@@ -1,4 +1,5 @@
 import { optionLabels } from "../config/app";
+import { isCorrectOption } from "../data/chapters";
 
 export default function QuestionCard({
   index,
@@ -15,7 +16,7 @@ export default function QuestionCard({
       <div className="options-grid">
         {question.options.map((option, optionIndex) => {
           const isSelected = selected === option;
-          const isCorrect = option === question.correctAnswer;
+          const isCorrect = isCorrectOption(question, option);
           let state = "";
           if (locked) {
             if (isCorrect) state = "is-correct";
@@ -27,7 +28,7 @@ export default function QuestionCard({
 
           return (
             <button
-              key={option}
+              key={optionIndex}
               type="button"
               className={`option-btn ${state}`}
               onClick={() => onSelect(option)}

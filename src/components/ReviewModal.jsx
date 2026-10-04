@@ -1,4 +1,5 @@
 import ExplanationFlip from "./ExplanationFlip";
+import { correctAnswerText } from "../data/chapters";
 
 export default function ReviewModal({ open, items, onClose, onRetry }) {
   if (!open) return null;
@@ -21,7 +22,7 @@ export default function ReviewModal({ open, items, onClose, onRetry }) {
               <li key={question.id} className="review-item">
                 <p className="review-q">{question.question}</p>
                 <p className="review-a wrong">إجابتك: {selected}</p>
-                <p className="review-a right">الإجابة الصحيحة: {question.correctAnswer}</p>
+                <p className="review-a right">الإجابة الصحيحة: {correctAnswerText(question)}</p>
                 <ExplanationFlip explanation={question.explanation} />
               </li>
             ))}

@@ -1,27 +1,28 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
 import Character from "../components/Character";
 import JourneyPath from "../components/JourneyPath";
 import ProgressBar from "../components/ProgressBar";
 import ScoreBadge from "../components/ScoreBadge";
 import ReviewModal from "../components/ReviewModal";
-import BiologyDecor from "../components/BiologyDecor";
-import { SUBJECT_IDS, TARGET_QUESTIONS, PLANNED_CHAPTERS } from "../config/app";
+import SubjectDecor from "../components/SubjectDecor";
+import { getSubjectById } from "../config/subjects";
 import { getChapterMeta, getQuestionsByChapter } from "../data/chapters";
 import { resultsHeadline } from "../data/messages";
 import { useSubjectProgress } from "../hooks/useSubjectProgress";
 import { getJourneyStageIndex, getMistakeEntries } from "../storage/progressStore";
 
 export default function ChapterResults() {
-  const { chapterId } = useParams();
+  const { subjectId, chapterId } = useParams();
+  const subject = getSubjectById(subjectId);
   const chapter = Number(chapterId);
   const navigate = useNavigate();
-  const meta = getChapterMeta(chapter);
-  const progress = useSubjectProgress(SUBJECT_IDS.biology);
+  const meta = getChapterMeta(subjectId, chapter);
+  const progress = useSubjectProgress(subjectId);
   const [reviewOpen, setReviewOpen] = useState(false);
 
-  const questions = getQuestionsByChapter(chapter);
+  const questions = getQuestionsByChapter(subjectId, chapter);
   const attempt = progress.lastAttempts?.[chapter];
   const fallbackCorrect = questions.filter((item) => progress.answers[item.id]?.correct).length;
   const correct = attempt?.correct ?? fallbackCorrect;
@@ -29,23 +30,28 @@ export default function ChapterResults() {
   const percent = total ? Math.round((correct / total) * 100) : 0;
   const answered = Object.keys(progress.answers).length;
   const mistakes = useMemo(
-    () => getMistakeEntries(SUBJECT_IDS.biology, questions),
-    [progress, chapter],
+    () => getMistakeEntries(subjectId, questions),
+    [progress, chapter, subjectId],
   );
   const nextChapter = chapter + 1;
-  const nextMeta = getChapterMeta(nextChapter);
-  const canGoNext = nextChapter <= PLANNED_CHAPTERS && nextMeta.hasQuestions;
-  const stage = getJourneyStageIndex(progress.completedChapters.length);
+  const nextMeta = getChapterMeta(subjectId, nextChapter);
+  const planned = subject?.plannedChapters ?? 0;
+  const canGoNext = nextChapter <= planned && nextMeta.hasQuestions;
+  const stage = getJourneyStageIndex(progress.completedChapters.length, planned);
   const pose = percent >= 80 ? "happy" : percent >= 50 ? "idle" : "think";
 
+  if (!subject) {
+    return <Navigate to="/subjects" replace />;
+  }
+
   return (
-    <div className="page theme-biology">
-      <BiologyDecor />
+    <div className={`page ${subject.theme}`}>
+      <SubjectDecor subjectId={subject.id} />
       <SchoolHeader compact />
 
       <main className="results-page fade-up">
         <div className="quiz-top">
-          <Link to="/biology" className="back-link">رجوع إلى الأحياء</Link>
+          <Link to={`/${subject.id}`} className="back-link">رجوع إلى {subject.name}</Link>
           <ScoreBadge points={progress.points} />
         </div>
 
@@ -55,7 +61,7 @@ export default function ChapterResults() {
             <h1>{resultsHeadline(correct, total, meta.ordinal)}</h1>
             <div className="result-stats">
               <article>
-            <strong>{correct} من {total}</strong>
+                <strong>{correct} من {total}</strong>
                 <span>إجابات صحيحة</span>
               </article>
               <article>
@@ -71,9 +77,13 @@ export default function ChapterResults() {
         </section>
 
         <section className="hub-progress-card">
-          <ProgressBar value={answered} max={TARGET_QUESTIONS} label="تقدمك في الأحياء" />
+          <ProgressBar value={answered} max={subject.targetQuestions} label={`تقدمك في ${subject.name}`} />
           <p className="journey-note">تقدّمت نورة خطوة في رحلة التخرج.</p>
-          <JourneyPath completedChapters={progress.completedChapters.length} />
+          <JourneyPath
+            completedChapters={progress.completedChapters.length}
+            plannedChapters={planned}
+            label={`رحلتي في ${subject.name}`}
+          />
         </section>
 
         <div className="results-actions">
@@ -84,10 +94,14 @@ export default function ChapterResults() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => navigate(`/biology/chapter/${nextChapter}`)}
+              onClick={() => navigate(`/${subject.id}/chapter/${nextChapter}`)}
             >
               الفصل التالي ←
             </button>
+          ) : nextChapter > planned ? (
+            <Link to={`/${subject.id}`} className="btn btn-primary">
+              أنهيتِ هذه المادة 🎓
+            </Link>
           ) : (
             <button type="button" className="btn btn-primary" disabled>
               الفصل التالي قريبًا ✨
@@ -100,7 +114,7 @@ export default function ChapterResults() {
         open={reviewOpen}
         items={mistakes}
         onClose={() => setReviewOpen(false)}
-          onRetry={() => navigate(`/biology/chapter/${chapter}?attempt=${Date.now()}`, { replace: true })}
+        onRetry={() => navigate(`/${subject.id}/chapter/${chapter}?attempt=${Date.now()}`, { replace: true })}
       />
     </div>
   );

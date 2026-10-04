@@ -1,24 +1,31 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
 import Character from "../components/Character";
 import JourneyPath from "../components/JourneyPath";
 import ScoreBadge from "../components/ScoreBadge";
 import ProgressBar from "../components/ProgressBar";
-import BiologyDecor from "../components/BiologyDecor";
-import { companion, SUBJECT_IDS, TARGET_QUESTIONS } from "../config/app";
-import { subjects } from "../config/subjects";
-import { getBiologyChapterCards } from "../data/chapters";
+import SubjectDecor from "../components/SubjectDecor";
+import { companion } from "../config/app";
+import { getSubjectById } from "../config/subjects";
+import { getSubjectChapterCards } from "../data/chapters";
 import { useSubjectProgress } from "../hooks/useSubjectProgress";
 import { getJourneyStageIndex, resetSubjectProgress } from "../storage/progressStore";
 
-export default function BiologyHub() {
+export default function SubjectHub() {
+  const { subjectId } = useParams();
+  const subject = getSubjectById(subjectId);
   const navigate = useNavigate();
-  const progress = useSubjectProgress(SUBJECT_IDS.biology);
-  const chapters = getBiologyChapterCards();
+  const progress = useSubjectProgress(subjectId);
+  const chapters = getSubjectChapterCards(subjectId);
   const answered = Object.keys(progress.answers).length;
   const completed = progress.completedChapters.length;
-  const stage = getJourneyStageIndex(completed);
+  const planned = subject?.plannedChapters ?? 1;
+  const stage = getJourneyStageIndex(completed, planned);
   const pose = stage >= 5 ? "graduate" : "idle";
+
+  if (!subject) {
+    return <Navigate to="/subjects" replace />;
+  }
 
   function chapterState(card) {
     const answeredInChapter = Object.values(progress.answers).filter(
@@ -39,20 +46,20 @@ export default function BiologyHub() {
     const state = chapterState(card);
     if (state === "soon" || state === "locked") return;
     if (state === "complete") {
-      navigate(`/biology/chapter/${card.chapter}/results`);
+      navigate(`/${subject.id}/chapter/${card.chapter}/results`);
       return;
     }
-    navigate(`/biology/chapter/${card.chapter}`);
+    navigate(`/${subject.id}/chapter/${card.chapter}`);
   }
 
   function resetProgress() {
-    const ok = window.confirm("هل تريدين إعادة تعيين تقدّمك في الأحياء على هذا الجهاز؟");
-    if (ok) resetSubjectProgress(SUBJECT_IDS.biology);
+    const ok = window.confirm(`هل تريدين إعادة تعيين تقدّمك في ${subject.name} على هذا الجهاز؟`);
+    if (ok) resetSubjectProgress(subject.id);
   }
 
   return (
-    <div className="page theme-biology">
-      <BiologyDecor />
+    <div className={`page ${subject.theme}`}>
+      <SubjectDecor subjectId={subject.id} />
       <SchoolHeader compact />
 
       <main className="bio-hub">
@@ -65,14 +72,16 @@ export default function BiologyHub() {
 
         <section className="bio-hero-panel fade-up">
           <div>
-            <p className="eyebrow">🧬 عالم الأحياء</p>
-            <h1>رحلتي في الأحياء</h1>
-            <div className="subject-teachers">
-              <p className="subject-teacher-label">معلمات المادة</p>
-              {(subjects.find((item) => item.id === SUBJECT_IDS.biology)?.teachers ?? []).map((name) => (
-                <p key={name}>{name}</p>
-              ))}
-            </div>
+            <p className="eyebrow">{subject.eyebrow}</p>
+            <h1>{subject.hubTitle}</h1>
+            {subject.teachers?.length ? (
+              <div className="subject-teachers">
+                <p className="subject-teacher-label">معلمات المادة</p>
+                {subject.teachers.map((name) => (
+                  <p key={name}>{name}</p>
+                ))}
+              </div>
+            ) : null}
             <p>
               {companion.name} تسير معك من البداية حتى التخرج. كل فصل عشر أسئلة متنوعة،
               وكل إجابة صحيحة تمنحك 10 نقاط.
@@ -85,13 +94,17 @@ export default function BiologyHub() {
           />
         </section>
 
-        <JourneyPath completedChapters={completed} />
+        <JourneyPath
+          completedChapters={completed}
+          plannedChapters={planned}
+          label={`رحلتي في ${subject.name}`}
+        />
 
         <section className="hub-progress-card fade-up">
           <ProgressBar
             value={answered}
-            max={TARGET_QUESTIONS}
-            label="تقدمك في الأحياء"
+            max={subject.targetQuestions}
+            label={`تقدمك في ${subject.name}`}
           />
         </section>
 

@@ -1,26 +1,28 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
 import Character from "../components/Character";
 import QuestionCard from "../components/QuestionCard";
 import ExplanationFlip from "../components/ExplanationFlip";
 import ScoreBadge from "../components/ScoreBadge";
 import SparkleBurst from "../components/SparkleBurst";
-import BiologyDecor from "../components/BiologyDecor";
-import { SUBJECT_IDS, QUESTIONS_PER_CHAPTER } from "../config/app";
-import { getChapterMeta, getQuestionsByChapter } from "../data/chapters";
+import SubjectDecor from "../components/SubjectDecor";
+import { QUESTIONS_PER_CHAPTER } from "../config/app";
+import { getSubjectById } from "../config/subjects";
+import { correctAnswerText, getChapterMeta, getQuestionsByChapter, isCorrectOption } from "../data/chapters";
 import { pickMessage, successMessages, encourageMessages } from "../data/messages";
 import { useSubjectProgress } from "../hooks/useSubjectProgress";
 import { completeChapter, getSubjectProgress, recordAnswer } from "../storage/progressStore";
 
 export default function ChapterQuiz() {
-  const { chapterId } = useParams();
+  const { subjectId, chapterId } = useParams();
+  const subject = getSubjectById(subjectId);
   const [searchParams] = useSearchParams();
   const chapter = Number(chapterId);
   const attemptKey = searchParams.get("attempt") ?? "resume";
   const navigate = useNavigate();
-  const meta = getChapterMeta(chapter);
-  const progress = useSubjectProgress(SUBJECT_IDS.biology);
+  const meta = getChapterMeta(subjectId, chapter);
+  const progress = useSubjectProgress(subjectId);
   const questions = meta.questions;
   const sessionRef = useRef([]);
 
@@ -33,20 +35,21 @@ export default function ChapterQuiz() {
   const [celebrating, setCelebrating] = useState(false);
 
   useEffect(() => {
-    const current = getSubjectProgress(SUBJECT_IDS.biology);
-    const chapterQuestions = getQuestionsByChapter(chapter);
+    if (!subject) return;
+    const current = getSubjectProgress(subject.id);
+    const chapterQuestions = getQuestionsByChapter(subject.id, chapter);
     const completed = current.completedChapters.includes(chapter);
     const firstUnanswered = chapterQuestions.findIndex((item) => !current.answers[item.id]);
     const allAnswered = chapterQuestions.length > 0 && firstUnanswered === -1;
 
     if (attemptKey === "resume" && allAnswered && !completed) {
       const correctCount = chapterQuestions.filter((item) => current.answers[item.id]?.correct).length;
-      completeChapter(SUBJECT_IDS.biology, chapter, {
+      completeChapter(subject.id, chapter, {
         correct: correctCount,
         total: chapterQuestions.length,
         at: Date.now(),
       });
-      navigate(`/biology/chapter/${chapter}/results`, { replace: true });
+      navigate(`/${subject.id}/chapter/${chapter}/results`, { replace: true });
       return;
     }
 
@@ -61,27 +64,19 @@ export default function ChapterQuiz() {
     setEarned(0);
     setPose("idle");
     setCelebrating(false);
-  }, [attemptKey, chapter, navigate]);
+  }, [attemptKey, chapter, navigate, subject]);
+
+  if (!subject) {
+    return <Navigate to="/subjects" replace />;
+  }
 
   const question = questions[index];
   const isLast = index === questions.length - 1;
 
-  if (!meta.hasQuestions || !question) {
-    return (
-      <div className="page theme-biology">
-        <SchoolHeader compact />
-        <main className="empty-chapter">
-          <h1>{meta.hasQuestions ? "جاري تجهيز السؤال…" : "هذا الفصل غير جاهز بعد"}</h1>
-          <Link to="/biology" className="btn btn-primary">العودة إلى الأحياء</Link>
-        </main>
-      </div>
-    );
-  }
-
   function choose(option) {
     if (locked || !question) return;
-    const correct = option === question.correctAnswer;
-    const result = recordAnswer(SUBJECT_IDS.biology, {
+    const correct = isCorrectOption(question, option);
+    const result = recordAnswer(subject.id, {
       questionId: question.id,
       chapter,
       selected: option,
@@ -131,16 +126,16 @@ export default function ChapterQuiz() {
         merged[question.id] = {
           id: question.id,
           selected,
-          correct: selected === question.correctAnswer,
+          correct: isCorrectOption(question, selected),
         };
       }
       const correctCount = Object.values(merged).filter((item) => item.correct).length;
-      completeChapter(SUBJECT_IDS.biology, chapter, {
+      completeChapter(subject.id, chapter, {
         correct: correctCount,
         total: questions.length,
         at: Date.now(),
       });
-      navigate(`/biology/chapter/${chapter}/results`);
+      navigate(`/${subject.id}/chapter/${chapter}/results`);
       return;
     }
 
@@ -152,15 +147,27 @@ export default function ChapterQuiz() {
     setPose("idle");
   }
 
+  if (!meta.hasQuestions || !question) {
+    return (
+      <div className={`page ${subject.theme}`}>
+        <SchoolHeader compact />
+        <main className="empty-chapter">
+          <h1>{meta.hasQuestions ? "جاري تجهيز السؤال…" : "هذا الفصل غير جاهز بعد"}</h1>
+          <Link to={`/${subject.id}`} className="btn btn-primary">العودة إلى {subject.name}</Link>
+        </main>
+      </div>
+    );
+  }
+
   return (
-    <div className="page theme-biology">
-      <BiologyDecor />
+    <div className={`page ${subject.theme}`}>
+      <SubjectDecor subjectId={subject.id} />
       <SchoolHeader compact />
       <SparkleBurst show={celebrating} />
 
       <main className="quiz-page">
         <div className="quiz-top">
-          <Link to="/biology" className="back-link">رجوع إلى الأحياء</Link>
+          <Link to={`/${subject.id}`} className="back-link">رجوع إلى {subject.name}</Link>
           <ScoreBadge points={progress.points} />
         </div>
 
@@ -201,7 +208,7 @@ export default function ChapterQuiz() {
                 ) : null}
                 {feedback.type === "encourage" ? (
                   <>
-                    <p className="correct-reveal">الإجابة الصحيحة: {question.correctAnswer}</p>
+                    <p className="correct-reveal">الإجابة الصحيحة: {correctAnswerText(question)}</p>
                     <ExplanationFlip explanation={question.explanation} />
                   </>
                 ) : null}

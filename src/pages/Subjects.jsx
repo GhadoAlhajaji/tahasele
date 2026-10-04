@@ -10,7 +10,7 @@ export default function Subjects() {
         <div className="page-intro fade-up">
           <p className="eyebrow">اختيار المادة</p>
           <h1>من اين تحبين ان تبدأين؟</h1>
-          <p>حاليًا تتوفر مادة الأحياء. بقية المواد سنضيفها لاحقًا في المكان نفسه.</p>
+          <p>تتوفر الآن الأحياء والكيمياء والفيزياء.</p>
         </div>
 
         <div className="subjects-grid fade-up delay-1">

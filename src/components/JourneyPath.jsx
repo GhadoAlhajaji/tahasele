@@ -1,11 +1,16 @@
 import { journeyStages } from "../config/app";
 import { getJourneyStageIndex } from "../storage/progressStore";
 
-export default function JourneyPath({ completedChapters = 0, compact = false }) {
-  const activeIndex = getJourneyStageIndex(completedChapters);
+export default function JourneyPath({
+  completedChapters = 0,
+  plannedChapters,
+  compact = false,
+  label = "رحلتي",
+}) {
+  const activeIndex = getJourneyStageIndex(completedChapters, plannedChapters);
 
   return (
-    <section className={`journey-path ${compact ? "is-compact" : ""}`} aria-label="رحلتي في الأحياء">
+    <section className={`journey-path ${compact ? "is-compact" : ""}`} aria-label={label}>
       <ol className="journey-track">
         {journeyStages.map((stage, index) => {
           const state =
