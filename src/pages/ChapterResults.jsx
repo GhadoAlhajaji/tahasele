@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
-import Character from "../components/Character";
 import JourneyPath from "../components/JourneyPath";
 import ProgressBar from "../components/ProgressBar";
 import ScoreBadge from "../components/ScoreBadge";
@@ -11,7 +10,7 @@ import { getSubjectById } from "../config/subjects";
 import { getChapterMeta, getQuestionsByChapter } from "../data/chapters";
 import { resultsHeadline } from "../data/messages";
 import { useSubjectProgress } from "../hooks/useSubjectProgress";
-import { getJourneyStageIndex, getMistakeEntries } from "../storage/progressStore";
+import { getMistakeEntries } from "../storage/progressStore";
 
 export default function ChapterResults() {
   const { subjectId, chapterId } = useParams();
@@ -37,9 +36,6 @@ export default function ChapterResults() {
   const nextMeta = getChapterMeta(subjectId, nextChapter);
   const planned = subject?.plannedChapters ?? 0;
   const canGoNext = nextChapter <= planned && nextMeta.hasQuestions;
-  const stage = getJourneyStageIndex(progress.completedChapters.length, planned);
-  const pose = percent >= 80 ? "happy" : percent >= 50 ? "idle" : "think";
-
   if (!subject) {
     return <Navigate to="/subjects" replace />;
   }
@@ -56,7 +52,6 @@ export default function ChapterResults() {
         </div>
 
         <section className="results-hero">
-          <Character pose={stage >= 5 ? "graduate" : pose} size="lg" celebrating={percent >= 70} />
           <div>
             <h1>{resultsHeadline(correct, total, meta.ordinal)}</h1>
             <div className="result-stats">

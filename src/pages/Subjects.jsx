@@ -16,16 +16,17 @@ export default function Subjects() {
         <div className="page-intro fade-up">
           <p className="eyebrow">اختيار المادة</p>
           <h1>من اين تحبين ان تبدأين؟</h1>
-          <p>تتوفر الآن الأحياء والكيمياء والفيزياء.</p>
         </div>
 
         <div className="subjects-grid fade-up delay-1">
           {subjects.map((subject) => (
             <Link key={subject.id} to={subject.path} className={`subject-card is-live is-${subject.id}`}>
+              <span className="card-blob" aria-hidden="true" />
               <span className="subject-icon">
                 <SubjectMark subjectId={subject.id} />
               </span>
               <h2>{subject.name}</h2>
+              <p className="subject-tag">{subject.cardTag}</p>
               {subject.teachers?.length ? (
                 <div className="subject-teachers">
                   <p className="subject-teacher-label">
@@ -36,8 +37,10 @@ export default function Subjects() {
                   ))}
                 </div>
               ) : null}
-              <p>{subject.blurb}</p>
-              <span className="subject-cta">ادخلي المادة</span>
+              <span className="subject-cta">
+                ابدئي الآن
+                <span aria-hidden="true">←</span>
+              </span>
             </Link>
           ))}
 

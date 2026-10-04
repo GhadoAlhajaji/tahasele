@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
-import Character from "../components/Character";
 import QuestionCard from "../components/QuestionCard";
 import ExplanationFlip from "../components/ExplanationFlip";
 import ScoreBadge from "../components/ScoreBadge";
@@ -31,7 +30,6 @@ export default function ChapterQuiz() {
   const [locked, setLocked] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const [earned, setEarned] = useState(0);
-  const [pose, setPose] = useState("idle");
   const [celebrating, setCelebrating] = useState(false);
 
   useEffect(() => {
@@ -62,7 +60,6 @@ export default function ChapterQuiz() {
     setLocked(false);
     setFeedback(null);
     setEarned(0);
-    setPose("idle");
     setCelebrating(false);
   }, [attemptKey, chapter, navigate, subject]);
 
@@ -93,7 +90,6 @@ export default function ChapterQuiz() {
     sessionRef.current = nextSession;
 
     if (correct) {
-      setPose("happy");
       setCelebrating(true);
       setFeedback({
         type: "success",
@@ -101,7 +97,6 @@ export default function ChapterQuiz() {
       });
       window.setTimeout(() => setCelebrating(false), 900);
     } else {
-      setPose("think");
       setFeedback({
         type: "encourage",
         text: pickMessage(encourageMessages),
@@ -144,7 +139,6 @@ export default function ChapterQuiz() {
     setLocked(false);
     setFeedback(null);
     setEarned(0);
-    setPose("idle");
   }
 
   if (!meta.hasQuestions || !question) {
@@ -173,7 +167,6 @@ export default function ChapterQuiz() {
 
         <div className="quiz-layout">
           <aside className="quiz-companion">
-            <Character pose={pose} size="md" celebrating={celebrating} />
             <p className="quiz-chapter-title">الفصل {meta.ordinal}</p>
             <p className="quiz-chapter-intro">{meta.intro}</p>
           </aside>

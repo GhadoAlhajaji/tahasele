@@ -1,15 +1,15 @@
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
-import Character from "../components/Character";
 import JourneyPath from "../components/JourneyPath";
 import ScoreBadge from "../components/ScoreBadge";
 import ProgressBar from "../components/ProgressBar";
 import SubjectDecor from "../components/SubjectDecor";
+import SubjectMark from "../components/SubjectMark";
 import { companion } from "../config/app";
 import { getSubjectById } from "../config/subjects";
 import { getSubjectChapterCards } from "../data/chapters";
 import { useSubjectProgress } from "../hooks/useSubjectProgress";
-import { getJourneyStageIndex, resetSubjectProgress } from "../storage/progressStore";
+import { resetSubjectProgress } from "../storage/progressStore";
 
 export default function SubjectHub() {
   const { subjectId } = useParams();
@@ -20,10 +20,8 @@ export default function SubjectHub() {
   const answered = Object.keys(progress.answers).length;
   const completed = progress.completedChapters.length;
   const planned = subject?.plannedChapters ?? 1;
-  const stage = getJourneyStageIndex(completed, planned);
-  const pose = stage >= 5 ? "graduate" : "idle";
   const chapterIcons = {
-    biology: ["🍃", "🧬", "🔬", "🌱"],
+    biology: ["🧫", "🔬", "🧬", "🦠"],
     chemistry: ["⚗️", "🧪", "🫧", "🔬"],
     physics: ["⚛️", "⚡", "🌊", "🔭"],
   };
@@ -75,10 +73,10 @@ export default function SubjectHub() {
           <ScoreBadge points={progress.points} />
         </div>
 
-        <section className="bio-hero-panel fade-up">
-          <div>
-            <p className="eyebrow">{subject.eyebrow}</p>
-            <h1>{subject.hubTitle}</h1>
+        <section className="theme-banner fade-up">
+          <div className="hub-copy">
+            <h1>{subject.name}</h1>
+            <p className="banner-tag">{subject.bannerTag}</p>
             {subject.teachers?.length ? (
               <div className="subject-teachers">
                 <p className="subject-teacher-label">
@@ -94,11 +92,9 @@ export default function SubjectHub() {
               وكل إجابة صحيحة تمنحك 10 نقاط.
             </p>
           </div>
-          <Character
-            pose={pose}
-            size="lg"
-            caption={stage >= 5 ? "يوم التخرج اقترب" : "جاهزة للفصل التالي"}
-          />
+          <div className="hub-art" aria-hidden="true">
+            <SubjectMark subjectId={subject.id} />
+          </div>
         </section>
 
         <JourneyPath
@@ -107,11 +103,14 @@ export default function SubjectHub() {
           label={`رحلتي في ${subject.name}`}
         />
 
-        <section className="hub-progress-card fade-up">
+        <section className="theme-meter fade-up">
+          <span className="theme-meter-icon" aria-hidden="true">
+            <SubjectMark subjectId={subject.id} />
+          </span>
           <ProgressBar
             value={answered}
             max={subject.targetQuestions}
-            label={`تقدمك في ${subject.name}`}
+            label="تقدمك في المادة"
           />
         </section>
 
@@ -143,6 +142,9 @@ export default function SubjectHub() {
                   </div>
                   <span className="chapter-glyph" aria-hidden="true">
                     {(chapterIcons[subject.id] ?? chapterIcons.biology)[(card.chapter - 1) % 4]}
+                  </span>
+                  <span className="chapter-chevron" aria-hidden="true">
+                    ‹
                   </span>
                 </button>
               );

@@ -891,11 +891,21 @@ a {
 
 .results-hero {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 1fr;
   gap: 18px;
   align-items: center;
   padding: 20px;
   margin-bottom: 18px;
+}
+
+.hub-art {
+  display: grid;
+  place-items: center;
+}
+
+.hub-art svg {
+  width: min(180px, 42vw);
+  height: auto;
 }
 
 .result-stats {
@@ -1238,18 +1248,26 @@ a {
 
 .subjects-grid {
   align-items: stretch;
+  direction: ltr;
 }
 
 .subject-card {
+  direction: rtl;
   position: relative;
   overflow: hidden;
-  min-height: 320px;
-  padding: 28px 22px 22px;
-  border-radius: 32px;
+  min-height: 340px;
+  padding: 22px 22px 26px;
+  border-radius: 36px;
   background: white;
   text-align: center;
   align-items: center;
+  border: 0;
+  box-shadow: 0 16px 40px rgba(80, 90, 120, 0.08);
 }
+
+.subject-card.is-chemistry { order: 1; }
+.subject-card.is-biology { order: 2; }
+.subject-card.is-physics { order: 3; }
 
 .subject-card::after {
   content: "";
@@ -1263,18 +1281,38 @@ a {
 }
 
 .subject-card.is-biology {
-  background: linear-gradient(180deg, #f4fbf7 0%, #e7f6ee 100%);
+  background:
+    radial-gradient(circle at 18% 78%, rgba(167, 227, 202, 0.55), transparent 28%),
+    radial-gradient(circle at 88% 18%, rgba(232, 247, 238, 0.9), transparent 26%),
+    linear-gradient(180deg, #f7fbf8 0%, #e7f6ee 100%);
   color: #245744;
 }
 
 .subject-card.is-chemistry {
-  background: linear-gradient(180deg, #f8f5ff 0%, #efe8ff 100%);
+  background:
+    radial-gradient(circle at 12% 20%, rgba(201, 182, 255, 0.45), transparent 24%),
+    radial-gradient(circle at 90% 80%, rgba(243, 238, 255, 0.8), transparent 28%),
+    linear-gradient(180deg, #f8f4ff 0%, #efe6ff 100%);
   color: #43356d;
 }
 
 .subject-card.is-physics {
-  background: linear-gradient(180deg, #f5f9ff 0%, #e7f1ff 100%);
+  background:
+    radial-gradient(circle at 16% 22%, rgba(147, 197, 253, 0.45), transparent 26%),
+    radial-gradient(circle at 86% 78%, rgba(228, 242, 255, 0.9), transparent 28%),
+    linear-gradient(180deg, #f5f9ff 0%, #e4f1ff 100%);
   color: #23406b;
+}
+
+.card-blob {
+  position: absolute;
+  width: 90px;
+  height: 70px;
+  border-radius: 50%;
+  right: -18px;
+  bottom: 28px;
+  background: rgba(255, 255, 255, 0.45);
+  pointer-events: none;
 }
 
 .subject-card.is-live:hover {
@@ -1282,19 +1320,21 @@ a {
 }
 
 .subject-icon {
-  width: 92px;
-  height: 92px;
-  margin: 8px auto 6px;
-  border-radius: 50%;
+  width: 168px;
+  height: 132px;
+  margin: 6px auto 0;
   display: grid;
   place-items: center;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 10px 24px rgba(36, 48, 68, 0.08);
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .subject-icon svg {
-  width: 48px;
-  height: 48px;
+  width: 168px;
+  height: 132px;
 }
 
 .subject-card.is-biology .subject-icon { color: #3d9b72; }
@@ -1302,7 +1342,18 @@ a {
 .subject-card.is-physics .subject-icon { color: #4f8df7; }
 
 .subject-card h2 {
-  font-size: 1.55rem;
+  position: relative;
+  z-index: 1;
+  font-size: 1.7rem;
+  margin-top: 4px;
+}
+
+.subject-tag {
+  position: relative;
+  z-index: 1;
+  margin: 4px 0 8px;
+  color: #667085;
+  font-weight: 700;
 }
 
 .subject-card .subject-teachers,
@@ -1318,21 +1369,118 @@ a {
 }
 
 .subject-cta {
-  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 132px;
-  padding: 10px 18px;
+  gap: 8px;
+  min-width: 148px;
+  padding: 11px 18px;
   border-radius: 999px;
   color: white;
   background: var(--accent, #4caf7d);
-  box-shadow: 0 8px 18px rgba(36, 48, 68, 0.12);
+  box-shadow: 0 10px 20px rgba(36, 48, 68, 0.12);
 }
 
 .subject-card.is-biology .subject-cta { background: #4caf7d; }
-.subject-card.is-chemistry .subject-cta { background: #8b74e8; }
-.subject-card.is-physics .subject-cta { background: #4f8df7; }
+.subject-card.is-chemistry .subject-cta { background: #7b61ff; }
+.subject-card.is-physics .subject-cta { background: #3b82f6; }
+
+.theme-banner {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  align-items: center;
+  gap: 12px;
+  min-height: 210px;
+  padding: 28px 32px;
+  border-radius: 32px;
+  position: relative;
+  overflow: hidden;
+  margin: 8px 0 16px;
+  border: 0;
+  box-shadow: 0 14px 36px rgba(80, 90, 120, 0.08);
+}
+
+.theme-biology .theme-banner {
+  background:
+    radial-gradient(circle at 8% 80%, rgba(125, 206, 160, 0.35), transparent 28%),
+    radial-gradient(circle at 92% 20%, rgba(232, 247, 238, 0.8), transparent 24%),
+    linear-gradient(100deg, #e5f6ec 0%, #f7fbf8 58%);
+}
+
+.theme-chemistry .theme-banner {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(201, 182, 255, 0.45), transparent 26%),
+    radial-gradient(circle at 88% 80%, rgba(243, 238, 255, 0.7), transparent 24%),
+    linear-gradient(100deg, #efe6ff 0%, #f8f5ff 58%);
+}
+
+.theme-physics .theme-banner {
+  background:
+    radial-gradient(circle at 8% 30%, rgba(147, 197, 253, 0.4), transparent 26%),
+    radial-gradient(circle at 90% 75%, rgba(228, 242, 255, 0.8), transparent 24%),
+    linear-gradient(100deg, #e4f1ff 0%, #f7fbff 58%);
+}
+
+.theme-banner h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 6px;
+}
+
+.banner-tag {
+  font-weight: 700;
+  color: #5d6b7a;
+  margin-bottom: 8px;
+}
+
+.hub-art svg {
+  width: min(230px, 46vw);
+  height: auto;
+}
+
+.theme-meter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  border-radius: 24px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 28px rgba(80, 90, 120, 0.07);
+}
+
+.theme-meter .progress-block {
+  flex: 1;
+}
+
+.theme-meter-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft, #e8f7ee);
+  flex: none;
+  overflow: hidden;
+}
+
+.theme-meter-icon svg {
+  width: 40px;
+  height: 36px;
+}
+
+@media (max-width: 800px) {
+  .theme-banner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hub-art {
+    order: -1;
+  }
+}
 
 .chapter-card {
   align-items: center;
