@@ -45,7 +45,7 @@ export const subjects = [
     blurb: "ادخلي عالم الحركة والقياس والقوانين، وتقدّمي مع نورة نحو التخرج.",
     cardTag: "افهمي الحركة والطاقة",
     bannerTag: "قوانين الحركة والطاقة",
-    teachers: ["امجاد العتيبي"],
+    teachers: ["امجاد العتيبي", "نوه القرني"],
     plannedChapters: 141,
     targetQuestions: 1410,
   },
