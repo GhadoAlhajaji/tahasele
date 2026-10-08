@@ -8,7 +8,7 @@ export default function Home() {
     <div className="page theme-home">
       <div className="home-glow" aria-hidden="true" />
       <SchoolHeader />
-      <p className="principal-name">مالكة المبادرة : سمر الهذلي</p>
+      <p className="principal-name">مالك المبادرة : أ.سمر الهذلي</p>
       <p className="principal-name">مديرة المدرسة: {school.principal}</p>
 
       <main className="hero">
