@@ -1,12 +1,19 @@
 import { useState } from "react";
 
-export default function ExplanationFlip({ explanation }) {
+export default function ExplanationFlip({ explanation, onOpen }) {
   const [open, setOpen] = useState(false);
 
   if (!open) {
     return (
       <div className="why-wrap">
-        <button type="button" className="why-btn" onClick={() => setOpen(true)}>
+        <button
+          type="button"
+          className="why-btn"
+          onClick={() => {
+            setOpen(true);
+            onOpen?.();
+          }}
+        >
           لماذا؟ 💡
         </button>
       </div>

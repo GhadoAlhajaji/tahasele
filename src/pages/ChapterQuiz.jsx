@@ -31,6 +31,7 @@ export default function ChapterQuiz() {
   const [feedback, setFeedback] = useState(null);
   const [earned, setEarned] = useState(0);
   const [celebrating, setCelebrating] = useState(false);
+  const [reasonSeen, setReasonSeen] = useState(false);
 
   useEffect(() => {
     if (!subject) return;
@@ -61,6 +62,7 @@ export default function ChapterQuiz() {
     setFeedback(null);
     setEarned(0);
     setCelebrating(false);
+    setReasonSeen(false);
   }, [attemptKey, chapter, navigate, subject]);
 
   if (!subject) {
@@ -97,6 +99,7 @@ export default function ChapterQuiz() {
       });
       window.setTimeout(() => setCelebrating(false), 900);
     } else {
+      setReasonSeen(false);
       setFeedback({
         type: "encourage",
         text: pickMessage(encourageMessages),
@@ -106,6 +109,7 @@ export default function ChapterQuiz() {
 
   function next() {
     if (!locked) return;
+    if (feedback?.type === "encourage" && !reasonSeen) return;
 
     if (isLast) {
       const merged = {};
@@ -139,6 +143,7 @@ export default function ChapterQuiz() {
     setLocked(false);
     setFeedback(null);
     setEarned(0);
+    setReasonSeen(false);
   }
 
   if (!meta.hasQuestions || !question) {
@@ -202,12 +207,23 @@ export default function ChapterQuiz() {
                 {feedback.type === "encourage" ? (
                   <>
                     <p className="correct-reveal">الإجابة الصحيحة: {correctAnswerText(question)}</p>
-                    <ExplanationFlip explanation={question.explanation} />
+                    <ExplanationFlip
+                      explanation={question.explanation}
+                      onOpen={() => setReasonSeen(true)}
+                    />
                   </>
                 ) : null}
-                <button type="button" className="btn btn-primary" onClick={next}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={next}
+                  disabled={feedback.type === "encourage" && !reasonSeen}
+                >
                   {isLast ? "عرض النتيجة 🎉" : "السؤال التالي"}
                 </button>
+                {feedback.type === "encourage" && !reasonSeen ? (
+                  <p className="choose-hint">اضغطي «لماذا؟» حتى يظهر لكِ السؤال التالي</p>
+                ) : null}
               </div>
             ) : (
               <p className="choose-hint">اختاري الإجابة التي ترينها صحيحة</p>

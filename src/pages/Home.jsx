@@ -8,14 +8,15 @@ export default function Home() {
     <div className="page theme-home">
       <div className="home-glow" aria-hidden="true" />
       <SchoolHeader />
+      <p className="principal-name">مالكة المبادرة : سمر الهذلي</p>
       <p className="principal-name">مديرة المدرسة: {school.principal}</p>
 
       <main className="hero">
         <div className="hero-copy fade-up">
           <p className="eyebrow">رحلة التحصيلي</p>
           <h1>
-            من أول سؤال
-            <span> إلى يوم التخرج 🎓</span>
+            رحلتنا معا في التحصيلي
+            <span> الى يوم التخرج 🎓</span>
           </h1>
           <p className="lede">
             تجربة تفاعلية لطالبات المرحلة الثانوية. ترافقك {companion.name} في مسار ممتع،
