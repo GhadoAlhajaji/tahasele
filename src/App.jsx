@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import LaunchSplash from "./components/LaunchSplash";
 import Home from "./pages/Home";
+import Heroines from "./pages/Heroines";
 import Subjects from "./pages/Subjects";
 import SubjectHub from "./pages/BiologyHub";
 import ChapterQuiz from "./pages/ChapterQuiz";
@@ -31,6 +32,7 @@ export default function App() {
       <div inert={showLaunch}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/heroines" element={<Heroines />} />
           <Route path="/subjects" element={<Subjects />} />
           <Route path="/:subjectId" element={<SubjectHub />} />
           <Route path="/:subjectId/chapter/:chapterId" element={<ChapterQuiz />} />

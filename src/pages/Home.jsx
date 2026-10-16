@@ -13,7 +13,9 @@ export default function Home() {
 
       <main className="hero">
         <div className="hero-copy fade-up">
-          <p className="eyebrow">رحلة التحصيلي</p>
+          <Link to="/heroines" className="eyebrow eyebrow-btn">
+            بطلات التحصيلي
+          </Link>
           <h1>
             رحلتنا معا في التحصيلي
             <span> الى يوم التخرج 🎓</span>
