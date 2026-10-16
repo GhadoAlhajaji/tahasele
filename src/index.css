@@ -1864,6 +1864,14 @@ a {
   animation: none;
 }
 
+.launch-audio {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .launch-confetti {
   position: absolute;
   inset: 0;

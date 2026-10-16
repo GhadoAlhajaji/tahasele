@@ -113,7 +113,7 @@ function startConfetti(canvas) {
   };
 }
 
-export default function LaunchSplash({ onDone }) {
+export default function LaunchSplash({ onDone, onPlay }) {
   const navigate = useNavigate();
   const location = useLocation();
   const canvasRef = useRef(null);
@@ -142,6 +142,7 @@ export default function LaunchSplash({ onDone }) {
     started.current = true;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    onPlay();
     setPhase("celebrate");
 
     if (location.pathname !== "/") {

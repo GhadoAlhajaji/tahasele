@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import LaunchSplash from "./components/LaunchSplash";
 import Home from "./pages/Home";
@@ -9,9 +9,25 @@ import ChapterResults from "./pages/ChapterResults";
 
 export default function App() {
   const [showLaunch, setShowLaunch] = useState(true);
+  const audioRef = useRef(null);
+
+  const playLaunchAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const playback = audio.play();
+    if (playback) playback.catch(() => {});
+  };
 
   return (
     <>
+      <audio
+        ref={audioRef}
+        className="launch-audio"
+        src="/collaboration.mp3"
+        preload="auto"
+        playsInline
+        aria-hidden="true"
+      />
       <div inert={showLaunch}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,7 +38,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
-      {showLaunch ? <LaunchSplash onDone={() => setShowLaunch(false)} /> : null}
+      {showLaunch ? <LaunchSplash onPlay={playLaunchAudio} onDone={() => setShowLaunch(false)} /> : null}
     </>
   );
 }
