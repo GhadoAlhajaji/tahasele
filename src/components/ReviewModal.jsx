@@ -22,7 +22,16 @@ export default function ReviewModal({ open, items, onClose, onRetry }) {
               <li key={question.id} className="review-item">
                 <p className="review-q">{question.question}</p>
                 <p className="review-a wrong">إجابتك: {selected}</p>
-                <p className="review-a right">الإجابة الصحيحة: {correctAnswerText(question)}</p>
+                <p className="review-a right">
+                  الإجابة الصحيحة:{" "}
+                  <span
+                    className={
+                      question.italicOptions?.includes(question.correctAnswer) ? "is-italic" : ""
+                    }
+                  >
+                    {correctAnswerText(question)}
+                  </span>
+                </p>
                 <ExplanationFlip explanation={question.explanation} />
               </li>
             ))}

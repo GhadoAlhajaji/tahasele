@@ -11,8 +11,6 @@ import { physicsQuestionsFluids } from "./physicsQuestionsFluids.js";
 import { physicsQuestionsOptics } from "./physicsQuestionsOptics.js";
 import { physicsQuestionsCharge } from "./physicsQuestionsCharge.js";
 import { physicsQuestionsCircuits } from "./physicsQuestionsCircuits.js";
-import { physicsQuestionsInduction } from "./physicsQuestionsInduction.js";
-import { physicsQuestionsNuclear } from "./physicsQuestionsNuclear.js";
 
 function ltr(text) {
   return `\u202A${text}\u202C`;
@@ -1010,7 +1008,5 @@ export const physicsQuestions = [
   ...physicsQuestionsFluids,
   ...physicsQuestionsOptics,
   ...physicsQuestionsCharge,
-  ...physicsQuestionsCircuits,
-  ...physicsQuestionsInduction,
-  ...physicsQuestionsNuclear,
+  ...physicsQuestionsCircuits.filter((item) => item.chapter <= 100),
 ];

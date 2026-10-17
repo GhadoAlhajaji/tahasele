@@ -749,6 +749,12 @@ a {
   white-space: pre-line;
 }
 
+.option-text.is-italic,
+.correct-reveal .is-italic,
+.review-a .is-italic {
+  font-style: italic;
+}
+
 .question-text {
   font-size: clamp(1.15rem, 2.5vw, 1.55rem);
   line-height: 1.8;

@@ -206,7 +206,16 @@ export default function ChapterQuiz() {
                 ) : null}
                 {feedback.type === "encourage" ? (
                   <>
-                    <p className="correct-reveal">الإجابة الصحيحة: {correctAnswerText(question)}</p>
+                    <p className="correct-reveal">
+                      الإجابة الصحيحة:{" "}
+                      <span
+                        className={
+                          question.italicOptions?.includes(question.correctAnswer) ? "is-italic" : ""
+                        }
+                      >
+                        {correctAnswerText(question)}
+                      </span>
+                    </p>
                     <ExplanationFlip
                       explanation={question.explanation}
                       onOpen={() => setReasonSeen(true)}

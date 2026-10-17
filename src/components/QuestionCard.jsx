@@ -35,7 +35,11 @@ export default function QuestionCard({
               disabled={locked}
             >
               <span className="option-letter">{optionLabels[optionIndex]}</span>
-              <span className="option-text">{option}</span>
+              <span
+                className={`option-text${question.italicOptions?.includes(option) ? " is-italic" : ""}`}
+              >
+                {option}
+              </span>
             </button>
           );
         })}

@@ -46,8 +46,8 @@ export const subjects = [
     cardTag: "افهمي الحركة والطاقة",
     bannerTag: "قوانين الحركة والطاقة",
     teachers: ["امجاد العتيبي", "نوه القرني"],
-    plannedChapters: 141,
-    targetQuestions: 1410,
+    plannedChapters: 100,
+    targetQuestions: 1000,
   },
 ];
 
