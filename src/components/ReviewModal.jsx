@@ -1,52 +1,36 @@
-import ExplanationFlip from "./ExplanationFlip";
 import { correctAnswerText } from "../data/chapters";
 
-export default function ReviewModal({ open, items, onClose, onRetry }) {
-  if (!open) return null;
-
+export default function ReviewModal({ items }) {
   return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="review-title">
-      <div className="modal-sheet">
-        <div className="modal-head">
-          <h2 id="review-title">🔍 مراجعة أخطائي</h2>
-          <button type="button" className="icon-close" onClick={onClose} aria-label="إغلاق">
-            ×
-          </button>
-        </div>
+    <section className="mistake-review" id="mistakes" aria-labelledby="review-title">
+      <h2 id="review-title">مراجعة الأخطاء</h2>
+      <p className="mistake-review-note">راجعي إجاباتك الخاطئة هنا بدون إعادة الفصل.</p>
 
-        {items.length === 0 ? (
-          <p className="empty-note">ما شاء الله… لا توجد أخطاء في هذا الفصل 🌟</p>
-        ) : (
-          <ul className="review-list">
-            {items.map(({ question, selected }) => (
-              <li key={question.id} className="review-item">
-                <p className="review-q">{question.question}</p>
-                <p className="review-a wrong">إجابتك: {selected}</p>
-                <p className="review-a right">
-                  الإجابة الصحيحة:{" "}
-                  <span
-                    className={
-                      question.italicOptions?.includes(question.correctAnswer) ? "is-italic" : ""
-                    }
-                  >
-                    {correctAnswerText(question)}
-                  </span>
-                </p>
-                <ExplanationFlip explanation={question.explanation} />
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <div className="modal-actions">
-          <button type="button" className="btn btn-ghost" onClick={onClose}>
-            إغلاق
-          </button>
-          <button type="button" className="btn btn-primary" onClick={onRetry}>
-            حاولي مرة أخرى
-          </button>
-        </div>
-      </div>
-    </div>
+      {items.length === 0 ? (
+        <p className="empty-note">ما شاء الله… لا توجد أخطاء في هذا الفصل 🌟</p>
+      ) : (
+        <ul className="review-list">
+          {items.map(({ question, selected }, index) => (
+            <li key={question.id} className="review-item">
+              <p className="review-q">
+                {index + 1}. {question.question}
+              </p>
+              <p className="review-a wrong">إجابتك: {selected}</p>
+              <p className="review-a right">
+                الإجابة الصحيحة:{" "}
+                <span
+                  className={
+                    question.italicOptions?.includes(question.correctAnswer) ? "is-italic" : ""
+                  }
+                >
+                  {correctAnswerText(question)}
+                </span>
+              </p>
+              <p className="review-explain">{question.explanation}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }

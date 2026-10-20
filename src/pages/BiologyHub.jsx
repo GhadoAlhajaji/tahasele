@@ -49,7 +49,12 @@ export default function SubjectHub() {
     const state = chapterState(card);
     if (state === "soon" || state === "locked") return;
     if (state === "complete") {
-      navigate(`/${subject.id}/chapter/${card.chapter}/results`);
+      const hasMistakes = Object.values(progress.answers).some(
+        (item) => item.chapter === card.chapter && item.correct === false,
+      );
+      navigate(
+        `/${subject.id}/chapter/${card.chapter}/results${hasMistakes ? "#mistakes" : ""}`,
+      );
       return;
     }
     navigate(`/${subject.id}/chapter/${card.chapter}`);
@@ -119,10 +124,13 @@ export default function SubjectHub() {
           <div className="chapters-grid">
             {chapters.map((card) => {
               const state = chapterState(card);
+              const hasMistakes = Object.values(progress.answers).some(
+                (item) => item.chapter === card.chapter && item.correct === false,
+              );
               const labels = {
                 ready: "ابدئي الفصل",
                 progress: "كمّلي الفصل",
-                complete: "عرض النتيجة",
+                complete: hasMistakes ? "مراجعة الأخطاء" : "عرض النتيجة",
                 locked: "يُفتح بعد الفصل السابق",
                 soon: "الأسئلة قادمة قريبًا",
               };

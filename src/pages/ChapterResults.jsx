@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import SchoolHeader from "../components/SchoolHeader";
 import JourneyPath from "../components/JourneyPath";
@@ -19,7 +19,6 @@ export default function ChapterResults() {
   const navigate = useNavigate();
   const meta = getChapterMeta(subjectId, chapter);
   const progress = useSubjectProgress(subjectId);
-  const [reviewOpen, setReviewOpen] = useState(false);
 
   const questions = getQuestionsByChapter(subjectId, chapter);
   const attempt = progress.lastAttempts?.[chapter];
@@ -36,6 +35,11 @@ export default function ChapterResults() {
   const nextMeta = getChapterMeta(subjectId, nextChapter);
   const planned = subject?.plannedChapters ?? 0;
   const canGoNext = nextChapter <= planned && nextMeta.hasQuestions;
+
+  useEffect(() => {
+    if (window.location.hash !== "#mistakes") return;
+    document.getElementById("mistakes")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [mistakes.length]);
   if (!subject) {
     return <Navigate to="/subjects" replace />;
   }
@@ -81,10 +85,9 @@ export default function ChapterResults() {
           />
         </section>
 
+        <ReviewModal items={mistakes} />
+
         <div className="results-actions">
-          <button type="button" className="btn btn-ghost" onClick={() => setReviewOpen(true)}>
-            مراجعة أخطائي 🔍
-          </button>
           {canGoNext ? (
             <button
               type="button"
@@ -104,13 +107,6 @@ export default function ChapterResults() {
           )}
         </div>
       </main>
-
-      <ReviewModal
-        open={reviewOpen}
-        items={mistakes}
-        onClose={() => setReviewOpen(false)}
-        onRetry={() => navigate(`/${subject.id}/chapter/${chapter}?attempt=${Date.now()}`, { replace: true })}
-      />
     </div>
   );
 }

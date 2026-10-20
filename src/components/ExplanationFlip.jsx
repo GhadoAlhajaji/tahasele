@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export default function ExplanationFlip({ explanation, onOpen }) {
-  const [open, setOpen] = useState(false);
+export default function ExplanationFlip({ explanation, onOpen, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
 
   if (!open) {
     return (
